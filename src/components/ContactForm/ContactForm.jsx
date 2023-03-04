@@ -1,18 +1,17 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
 import Button from 'shared/Button/Button';
 import LabelInput from 'shared/LabelInput/LabelInput';
 
-import { addContact } from 'redux/contacts/contactsSlice';
+import { fetchAddContact } from 'redux/contacts/contacts-operation';
 
 import styles from './ContactFofm.module.css';
 
 import initialState from './initialState';
 
 const ContactForm = () => {
-  const contacts = useSelector(store => store.contacts);
   const dispatch = useDispatch();
 
   const onChangingInput = e => {
@@ -21,16 +20,8 @@ const ContactForm = () => {
     return;
   };
 
-  const handleAddContact = data => {
-    const name = data.name;
-    if (contacts.find(contact => contact.name === name)) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-
-    const number = data.number;
-    const action = addContact({ name, number });
-    dispatch(action);
+  const handleAddContact = ({ name, number }) => {
+    dispatch(fetchAddContact({ name, number }));
   };
 
   const clearForm = e => {

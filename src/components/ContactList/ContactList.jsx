@@ -1,21 +1,21 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import { fetchAllContacts } from 'redux/contacts/contacts-operation';
+import { getFilteredContacts } from 'redux/contacts/contacts-selecrors';
 
 import styles from './ContactList.module.css';
 import ContactItem from 'components/ContactItem/ContactItem';
 
 const ContactList = () => {
-  const contacts = useSelector(store => store.contacts);
-  const filter = useSelector(store => store.filter);
+  const dispatch = useDispatch();
 
-  const filterContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+  useEffect(() => {
+    dispatch(fetchAllContacts());
+  }, [dispatch]);
 
-  const contactsList = filterContacts();
+  const contactsList = useSelector(getFilteredContacts);
 
   return (
     <ul className={styles.list}>
