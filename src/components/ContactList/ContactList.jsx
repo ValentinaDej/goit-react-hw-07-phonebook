@@ -38,3 +38,5 @@ ContactList.prototypes = {
     }).isRequired
   ).isRequired,
 };
+
+//  loading && <Loader />;

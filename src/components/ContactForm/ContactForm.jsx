@@ -1,9 +1,11 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
 import Button from 'shared/Button/Button';
 import LabelInput from 'shared/LabelInput/LabelInput';
+import Loader from 'components/Loader/Loader';
+import { getLoading } from 'redux/contacts/contacts-selecrors';
 
 import { fetchAddContact } from 'redux/contacts/contacts-operation';
 
@@ -28,6 +30,8 @@ const ContactForm = () => {
     e.target.elements.name.value = '';
     e.target.elements.number.value = '';
   };
+
+  const loading = useSelector(getLoading);
 
   return (
     <form
@@ -57,6 +61,7 @@ const ContactForm = () => {
         required="required"
       />
       <Button title="Add contact" type="submit" />
+      {loading && <Loader />}
     </form>
   );
 };
